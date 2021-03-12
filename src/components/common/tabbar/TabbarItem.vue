@@ -37,9 +37,10 @@ export default {
   font-size: 14px;
 }
 .tab-bar-item img {
+  display: inline-block;
   width: 24px;
   height: 24px;
-  margin-top: 3px;
+  margin-top: 4px;
   vertical-align: middle;
 }
 </style>

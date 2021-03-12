@@ -20,7 +20,7 @@
           <img src="@/assets/img/tabbar/category_active.svg" alt="" />
         </template>
         <template v-slot:itemName>
-          <span>種類</span>
+          <span>分類</span>
         </template>
       </tabbar-item>
       <tabbar-item path="/shopcart">
