@@ -35,6 +35,7 @@ export default {
     GetChangeItem(index) {
       //前面調用時獲取的index
       this.currentIndex = index;
+      this.$emit("getIndex", index);
     },
   },
 };

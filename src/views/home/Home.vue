@@ -6,7 +6,12 @@
     <home-swiper :childBanner="banner" />
     <home-recommend :childRecommend="recommend" />
     <home-feature />
-    <home-change :changeItem="['流行', '新款', '精選']" class="homeChange" />
+    <home-change
+      :changeItem="['流行', '新款', '精選']"
+      class="homeChange"
+      @getIndex="getChangeIndex"
+    />
+    <goods-list :goodlist="changeindexShow" />
     <ul>
       <li>123</li>
       <li>123</li>
@@ -92,16 +97,19 @@
   </div>
 </template>
 <script>
-// common-commponents
+// commponentscommon-
 import navBar from "components/common/navbar/navBar";
 
-// Home-commponents
+// content-com
+import GoodsList from "components/content/goods/GoodsList";
+
+// commponents-Home
 import HomeSwiper from "./homeChild/HomeSwiper";
 import HomeRecommend from "views/home/homeChild/HomeRecommend";
 import HomeFeature from "views/home/homeChild/HomeFeature";
 import HomeChange from "views/home/homeChild/HomeChange";
 
-// axios-network
+// network-axios
 import { getHomeData, getGoodsData } from "../../network/home";
 
 export default {
@@ -124,36 +132,57 @@ export default {
           list: [],
         },
       },
+      changeIndex: "pop",
     };
   },
   components: {
     navBar,
+    GoodsList,
     HomeSwiper,
     HomeRecommend,
     HomeFeature,
     HomeChange,
   },
   created() {
+    this.getHome();
     this.getGoods("pop");
     this.getGoods("new");
     this.getGoods("sell");
   },
   methods: {
-    // homeBanner、homeFeature
+    //監聽事件
+    getChangeIndex(index) {
+      switch (index) {
+        case 0:
+          this.changeIndex = "pop";
+          break;
+        case 1:
+          this.changeIndex = "new";
+          break;
+        case 2:
+          this.changeIndex = "sell";
+          break;
+      }
+    },
+
+    //network
     getHome() {
       getHomeData().then((res) => {
         this.banner = res.data.data.banner.list;
         this.recommend = res.data.data.recommend.list;
       });
     },
-    //homeGoods
     getGoods(type) {
       let page = this.goods[type].page + 1;
       getGoodsData(type, page).then((res) => {
         this.goods[type].page += 1;
         this.goods[type].list.push(...res.data.data.list);
-        console.log(res);
       });
+    },
+  },
+  computed: {
+    changeindexShow() {
+      return this.goods[this.changeIndex].list;
     },
   },
 };
@@ -169,5 +198,6 @@ export default {
 .homeChange {
   position: sticky;
   top: 44px;
+  z-index: 99;
 }
 </style>
