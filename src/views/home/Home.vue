@@ -3,105 +3,39 @@
     <nav-bar class="home-nav-bar">
       <template v-slot:center>購物街</template>
     </nav-bar>
-    <home-swiper :childBanner="banner" />
-    <home-recommend :childRecommend="recommend" />
-    <home-feature />
-    <home-change
-      :changeItem="['流行', '新款', '精選']"
-      class="homeChange"
-      @getIndex="getChangeIndex"
-    />
-    <goods-list :goodlist="changeindexShow" />
-    <ul>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-    </ul>
+
+    <!-- 步驟一：import封裝好的scroll並且加入至components裡後，將scroll標籤
+    插入相對應位置，並且該標籤即代表wrapper -->
+    <scroll
+      class="home-scroll"
+      ref="scrolltop"
+      :probe-type="3"
+      :pullUpLoad="true"
+      @scrolltop="scrolltop"
+      @loadmore="loadMore"
+    >
+      <home-swiper :childBanner="banner" ref="aaa" @loadswiper="loadswiper" />
+      <home-recommend :childRecommend="recommend" />
+      <home-feature />
+      <home-change
+        :changeItem="['流行', '新款', '精選']"
+        class="homeChange"
+        @getIndex="getChangeIndex"
+        ref="homechange"
+      />
+      <goods-list :goodlist="changeindexShow" />
+    </scroll>
+    <back-up @click.native="setBackUp" v-show="showBackUp" />
   </div>
 </template>
 <script>
-// commponentscommon-
+// commponents/common-
 import navBar from "components/common/navbar/navBar";
+import Scroll from "components/common/scroll/Scroll";
 
 // content-com
 import GoodsList from "components/content/goods/GoodsList";
+import BackUp from "components/content/goods/BackUp";
 
 // commponents-Home
 import HomeSwiper from "./homeChild/HomeSwiper";
@@ -133,11 +67,15 @@ export default {
         },
       },
       changeIndex: "pop",
+      showBackUp: false,
+      HomeChangeTop: 0,
     };
   },
   components: {
     navBar,
+    Scroll,
     GoodsList,
+    BackUp,
     HomeSwiper,
     HomeRecommend,
     HomeFeature,
@@ -148,6 +86,11 @@ export default {
     this.getGoods("pop");
     this.getGoods("new");
     this.getGoods("sell");
+  },
+  mounted() {
+    // this.$refs.scrolltop.scroll.on("scroll", (position) => {
+    //   console.log(this.$refs.homechange.$el.offsetTop);
+    // });
   },
   methods: {
     //監聽事件
@@ -163,6 +106,21 @@ export default {
           this.changeIndex = "sell";
           break;
       }
+    },
+    setBackUp() {
+      this.$refs.scrolltop.scrollto(0, 0);
+    },
+    clickdiv() {
+      console.log("click");
+    },
+    scrolltop(position) {
+      position.y < -1000 ? (this.showBackUp = true) : (this.showBackUp = false);
+    },
+    loadMore() {
+      this.getGoods(this.changeIndex);
+    },
+    loadswiper() {
+      this.HomeChangeTop = this.$refs.homechange.$el.offsetTop;
     },
 
     //network
@@ -189,15 +147,28 @@ export default {
 </script>
 <style scoped>
 #Home {
-  padding-top: 44px;
+  position: relative;
+  height: 100vh;
 }
 .home-nav-bar {
   background-color: var(--color-tint);
   color: #fff;
 }
-.homeChange {
-  position: sticky;
+.home-scroll {
+  position: absolute;
   top: 44px;
-  z-index: 99;
+  left: 0;
+  bottom: 49px;
+  overflow: hidden;
+  /* 步驟二：必須將content部分移到tabbar與navbar的中間，所以可以使用絕對定位的方式
+  再搭配top bottom把content撐開，並且在父標籤#HOME中寫下相對定位且要有高度
+  不然撐不開這個盒子，故使用vh該單位，該單位是表示可視區域的單位，若為100則
+  代表螢幕上可視區域佔屏100% */
+}
+
+.test {
+  width: 100px;
+  height: 100px;
+  background-color: pink;
 }
 </style>

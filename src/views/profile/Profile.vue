@@ -4,7 +4,14 @@
 <script>
 export default {
   name: "Profile",
+  components: {},
+  mounted() {},
 };
 </script>
 <style scoped>
+.wrapper {
+  overflow: hidden;
+  height: 350px;
+  background-color: red;
+}
 </style>

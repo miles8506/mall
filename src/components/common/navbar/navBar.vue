@@ -12,15 +12,11 @@ export default {
 </script>
 <style scoped>
 .nav-bar {
-  position: fixed;
-  top: 0;
-  right: 0;
   display: flex;
   width: 100%;
   height: 44px;
   line-height: 44px;
   text-align: center;
-  z-index: 99;
 }
 .nav-bar .nav-bar-left,
 .nav-bar .nav-bar-right {
