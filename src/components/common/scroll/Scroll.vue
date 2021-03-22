@@ -11,9 +11,10 @@ import BScroll from "@better-scroll/core";
 //步驟二：better-scroll中，導致第三方包檔案過大的情況
 import ObserveDOM from "@better-scroll/observe-dom";
 import Pullup from "@better-scroll/pull-up";
-
+import ObserveImage from "@better-scroll/observe-image";
 BScroll.use(ObserveDOM);
 BScroll.use(Pullup);
+BScroll.use(ObserveImage);
 
 export default {
   name: "Scroll",
@@ -43,6 +44,7 @@ export default {
       probeType: this.probeType,
       pullUpLoad: this.pullUpLoad,
       click: true,
+      observeImage: true,
     });
     this.scroll.on("scroll", (position) => {
       this.$emit("scrolltop", position);

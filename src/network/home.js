@@ -13,5 +13,6 @@ export function getGoodsData(type, page) {
       type,
       page
     }
+
   })
 }

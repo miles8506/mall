@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-list-items">
+  <div class="goods-list-items" @click="routerDetail">
     <img :src="goodlistitem.show.img" alt="" />
     <p class="title">{{ goodlistitem.title }}</p>
     <span class="price">{{ goodlistitem.price }}</span
@@ -15,6 +15,11 @@ export default {
       default() {
         return {};
       },
+    },
+  },
+  methods: {
+    routerDetail() {
+      this.$router.push("/detail/" + this.goodlistitem.iid);
     },
   },
 };

@@ -3,7 +3,14 @@
     <nav-bar class="home-nav-bar">
       <template v-slot:center>購物街</template>
     </nav-bar>
-
+    <home-change
+      :changeItem="['流行', '新款', '精選']"
+      class="homeChange"
+      @getIndex="getChangeIndex"
+      ref="homechange1"
+      :class="{ showChangeMask: fixed }"
+      v-show="fixed"
+    />
     <!-- 步驟一：import封裝好的scroll並且加入至components裡後，將scroll標籤
     插入相對應位置，並且該標籤即代表wrapper -->
     <scroll
@@ -21,7 +28,8 @@
         :changeItem="['流行', '新款', '精選']"
         class="homeChange"
         @getIndex="getChangeIndex"
-        ref="homechange"
+        ref="homechange2"
+        v-show="!fixed"
       />
       <goods-list :goodlist="changeindexShow" />
     </scroll>
@@ -69,6 +77,7 @@ export default {
       changeIndex: "pop",
       showBackUp: false,
       HomeChangeTop: 0,
+      fixed: false,
     };
   },
   components: {
@@ -87,11 +96,6 @@ export default {
     this.getGoods("new");
     this.getGoods("sell");
   },
-  mounted() {
-    // this.$refs.scrolltop.scroll.on("scroll", (position) => {
-    //   console.log(this.$refs.homechange.$el.offsetTop);
-    // });
-  },
   methods: {
     //監聽事件
     getChangeIndex(index) {
@@ -106,6 +110,8 @@ export default {
           this.changeIndex = "sell";
           break;
       }
+      this.$refs.homechange1.currentIndex = index;
+      this.$refs.homechange2.currentIndex = index;
     },
     setBackUp() {
       this.$refs.scrolltop.scrollto(0, 0);
@@ -115,12 +121,15 @@ export default {
     },
     scrolltop(position) {
       position.y < -1000 ? (this.showBackUp = true) : (this.showBackUp = false);
+      position.y <= -this.HomeChangeTop
+        ? (this.fixed = true)
+        : (this.fixed = false);
     },
     loadMore() {
       this.getGoods(this.changeIndex);
     },
     loadswiper() {
-      this.HomeChangeTop = this.$refs.homechange.$el.offsetTop;
+      this.HomeChangeTop = this.$refs.homechange2.$el.offsetTop;
     },
 
     //network
@@ -147,7 +156,6 @@ export default {
 </script>
 <style scoped>
 #Home {
-  position: relative;
   height: 100vh;
 }
 .home-nav-bar {
@@ -166,9 +174,8 @@ export default {
   代表螢幕上可視區域佔屏100% */
 }
 
-.test {
-  width: 100px;
-  height: 100px;
-  background-color: pink;
+.showChangeMask {
+  position: relative;
+  z-index: 9;
 }
 </style>
