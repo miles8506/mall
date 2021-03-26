@@ -40,9 +40,6 @@ export default {
       },
     },
   },
-  created() {
-    // this.goodInfo.sevenDayImg += "https://";
-  },
 };
 </script>
 <style scoped>
@@ -74,6 +71,7 @@ export default {
   margin-left: 10px;
   font-size: 14px;
   text-decoration: line-through;
+  color: #a3a3a5;
 }
 
 .info-top .discount-color {
@@ -94,8 +92,9 @@ export default {
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #999;
+  border-bottom: 1px solid #a3a3a5;
   font-size: 14px;
+  color: #a3a3a5;
 }
 
 .info-center span {
@@ -114,7 +113,7 @@ export default {
 .info-bottom {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 100px;
+  margin: 10px 0 30px 0;
   font-size: 14px;
 }
 .info-bottom span .good-img {

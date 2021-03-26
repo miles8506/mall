@@ -41,10 +41,10 @@ export default {
       //因為observeDOM可以防止當前端向後端發送請求而尚未響應時，
       //而先停止執行better-scroll
       observeDOM: true,
+      observeImage: true,
       probeType: this.probeType,
       pullUpLoad: this.pullUpLoad,
       click: true,
-      observeImage: true,
     });
     this.scroll.on("scroll", (position) => {
       this.$emit("scrolltop", position);
