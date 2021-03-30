@@ -2,31 +2,25 @@
   <div class="detail-goods-info">
     <div class="wrap">
       <hr class="left-line" />
-      <div class="desc">{{ goodsImg.desc }}</div>
+      <div class="desc">{{ $store.state.goodsImg.desc }}</div>
       <hr class="right-line" />
-      <div class="image-key">
-        {{ goodsImg.detailImage["0"].key }}
+      <div class="image-key" v-if="$store.state.goodsImg.detailImage">
+        {{ $store.state.goodsImg.detailImage[0].key }}
       </div>
     </div>
-    <img
-      :src="item"
-      alt=""
-      v-for="(item, index) in goodsImg.detailImage['0'].list"
-      :key="index"
-    />
+    <div v-if="$store.state.goodsImg.detailImage">
+      <img
+        :src="item"
+        alt=""
+        v-for="item in $store.state.goodsImg.detailImage[0].list"
+        :key="item"
+      />
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "DetailGoodsInfo",
-  props: {
-    goodsImg: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-  },
 };
 </script>
 <style scoped>

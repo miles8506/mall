@@ -1,18 +1,18 @@
 <template>
-  <div class="detail-params">
+  <div class="detailParams">
     <table>
       <tr
         v-for="(item, index) in params.table"
         :key="index"
-        class="params-table"
+        class="paramsTable"
       >
-        <td v-for="item in params.table[index]" :key="item">
+        <td v-for="(item, index) in params.table[index]" :key="index">
           {{ item }}
         </td>
       </tr>
     </table>
     <table>
-      <tr v-for="(item, index) in params.info" :key="index" class="detail-info">
+      <tr v-for="(item, index) in params.info" :key="index" class="detailInfo">
         <td>{{ item.key }}</td>
         <td>{{ item.value }}</td>
       </tr>
@@ -33,7 +33,7 @@ export default {
 };
 </script>
 <style scoped>
-.detail-params {
+.detailParams {
   padding: 0 10px;
   border-top: 5px solid #e7e7e9;
   background-color: #fff;
@@ -41,30 +41,30 @@ export default {
 table {
   width: 100%;
 }
-.params-table {
+.paramsTable {
   width: 100%;
   text-align: center;
 }
-.params-table td {
+.paramsTable td {
   width: 85px;
   padding: 15px 0;
 }
-.params-table:nth-child(1) td {
+.paramsTable:nth-child(1) td {
   padding-top: 40px;
 }
-.detail-info td {
+.detailInfo td {
   height: 60px;
 }
 
-.detail-info:nth-child(1) td {
+.detailInfo:nth-child(1) td {
   padding: 40px 0 20px;
 }
 
-.detail-info td:nth-child(1) {
+.detailInfo td:nth-child(1) {
   width: 100px;
   padding-left: 17px;
 }
-.detail-info td:nth-child(2) {
+.detailInfo td:nth-child(2) {
   color: var(--color-tint);
 }
 </style>

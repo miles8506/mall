@@ -78,6 +78,7 @@ export default {
       showBackUp: false,
       HomeChangeTop: 0,
       fixed: false,
+      positionY: 0,
     };
   },
   components: {
@@ -151,6 +152,13 @@ export default {
     changeindexShow() {
       return this.goods[this.changeIndex].list;
     },
+  },
+  activated() {
+    this.$refs.scrolltop.scrollto(0, this.positionY, 100);
+    this.$refs.scrolltop.scroll.refresh();
+  },
+  deactivated() {
+    this.positionY = this.$refs.scrolltop.scroll.y;
   },
 };
 </script>

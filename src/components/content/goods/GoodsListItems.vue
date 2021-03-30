@@ -1,9 +1,11 @@
 <template>
   <div class="goods-list-items" @click="routerDetail">
-    <img :src="goodlistitem.show.img" alt="" />
-    <p class="title">{{ goodlistitem.title }}</p>
-    <span class="price">{{ goodlistitem.price }}</span
-    ><span class="cfav">{{ goodlistitem.cfav }}</span>
+    <a href="javascript:;">
+      <img :src="option" alt="" />
+      <p class="title">{{ goodlistitem.title }}</p>
+      <span class="price">{{ goodlistitem.price }}</span
+      ><span class="cfav">{{ goodlistitem.cfav }}</span>
+    </a>
   </div>
 </template>
 <script>
@@ -19,7 +21,17 @@ export default {
   },
   methods: {
     routerDetail() {
-      this.$router.push("/detail/" + this.goodlistitem.iid);
+      if (this.goodlistitem.show && this.goodlistitem.show.img) {
+        this.$router.push("/detail/" + this.goodlistitem.iid);
+      }
+    },
+  },
+  computed: {
+    option() {
+      return (
+        (this.goodlistitem.show && this.goodlistitem.show.img) ||
+        this.goodlistitem.image
+      );
     },
   },
 };

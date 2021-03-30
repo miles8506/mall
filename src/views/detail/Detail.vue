@@ -1,12 +1,14 @@
 <template>
   <div id="Detail">
-    <scroll class="detail-scroll">
+    <scroll class="detail-scroll" :pullUpLoad="pullUpLoad">
       <detail-bar :detailbar="detailBar" />
       <detail-banner :topimage="topimage"></detail-banner>
       <detail-info :goodInfo="goodInfo" />
       <detail-shop-info :shopInfo="shopInfo" />
-      <detail-goods-info :goodsImg="goodsImg" />
+      <detail-goods-info />
       <detail-params :params="params" />
+      <deta-comment-info :comment="comment" />
+      <goods-list :goodlist="recommend" />
     </scroll>
   </div>
 </template>
@@ -18,10 +20,19 @@ import DetailInfo from "./detailChild/DetailInfo";
 import DetailShopInfo from "./detailChild/DetailShopInfo";
 import DetailGoodsInfo from "./detailChild/DetailGoodsInfo";
 import DetailParams from "./detailChild/DetailParams";
+import DetaCommentInfo from "./detailChild/DetaCommentInfo";
+import GoodsList from "components/content/goods/GoodsList";
 
 import Scroll from "components/common/scroll/Scroll";
 //network
-import { DetailData, goodInfo, shopInfo, params } from "network/detail.js";
+import {
+  DetailData,
+  goodInfo,
+  shopInfo,
+  params,
+  Recommend,
+} from "network/detail.js";
+
 export default {
   name: "Detail",
   data() {
@@ -31,8 +42,10 @@ export default {
       topimage: [],
       goodInfo: {},
       shopInfo: {},
-      goodsImg: {},
       params: {},
+      comment: {},
+      recommend: [],
+      pullUpLoad: true,
     };
   },
   components: {
@@ -42,6 +55,8 @@ export default {
     DetailShopInfo,
     DetailGoodsInfo,
     DetailParams,
+    DetaCommentInfo,
+    GoodsList,
     Scroll,
   },
   created() {
@@ -51,8 +66,14 @@ export default {
       this.topimage = data.itemInfo.topImages;
       this.goodInfo = new goodInfo(data);
       this.shopInfo = new shopInfo(data);
-      this.goodsImg = data.detailInfo;
+      this.$store.commit("goodsImgInfo", data.detailInfo);
       this.params = new params(data);
+      if (data.rate.cRate !== 0) {
+        this.comment = data.rate;
+      }
+    });
+    Recommend().then((res) => {
+      this.recommend = res.data.data.list;
     });
   },
 };

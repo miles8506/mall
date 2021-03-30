@@ -8,6 +8,13 @@ export function DetailData(iid) {
   })
 }
 
+export function Recommend() {
+  return request({
+    url: '/recommend',
+  })
+}
+
+
 //goodInfo
 export class goodInfo {
   constructor(data) {

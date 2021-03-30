@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    goodsImg: {},
   },
   mutations: {
+    goodsImgInfo(state, Img) {
+      state.goodsImg = Img;
+    }
   },
   actions: {
   },
