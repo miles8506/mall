@@ -1,7 +1,7 @@
 <template>
   <div class="goods-list-items" @click="routerDetail">
     <a href="javascript:;">
-      <img :src="option" alt="" />
+      <img :src="option" alt="" @load="imgload" />
       <p class="title">{{ goodlistitem.title }}</p>
       <span class="price">{{ goodlistitem.price }}</span
       ><span class="cfav">{{ goodlistitem.cfav }}</span>
@@ -24,6 +24,9 @@ export default {
       if (this.goodlistitem.show && this.goodlistitem.show.img) {
         this.$router.push("/detail/" + this.goodlistitem.iid);
       }
+    },
+    imgload() {
+      this.$bus.$emit("detailImgY");
     },
   },
   computed: {

@@ -14,6 +14,7 @@
           v-for="(item, index) in detailbar"
           :key="index"
           @click="itemclick(index)"
+          :href="'#' + index"
           :class="{ currentColor: currentIndex === index }"
         >
           {{ item }}
@@ -46,6 +47,7 @@ export default {
   methods: {
     itemclick(index) {
       this.currentIndex = index;
+      this.$emit("getDetailIndex", index);
     },
     backBtn() {
       this.$router.back();
@@ -65,6 +67,7 @@ export default {
 }
 .detailbar-center .detail-item {
   flex: 1;
+  line-height: 44px;
   font-size: 14px;
 }
 .back-img {

@@ -9,6 +9,6 @@ module.exports = {
       .set('network', resolve('src/network'))
       .set('views', resolve('src/views'))
       .set('assets', resolve('src/assets'))
-    //set第一个参数：设置的别名，第二个参数：设置的路径　　　
+    //set第一個參數：設置別名，第二個參數：設置路徑　　
   },
 };

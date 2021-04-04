@@ -14,6 +14,7 @@
         alt=""
         v-for="item in $store.state.goodsImg.detailImage[0].list"
         :key="item"
+        @load="imgload"
       />
     </div>
   </div>
@@ -21,6 +22,11 @@
 <script>
 export default {
   name: "DetailGoodsInfo",
+  methods: {
+    imgload() {
+      this.$emit("imgcomplete");
+    },
+  },
 };
 </script>
 <style scoped>
