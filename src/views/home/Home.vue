@@ -34,6 +34,7 @@
       <goods-list :goodlist="changeindexShow" />
     </scroll>
     <back-up @click.native="setBackUp" v-show="showBackUp" />
+    <main-tabbar />
   </div>
 </template>
 <script>
@@ -44,6 +45,7 @@ import Scroll from "components/common/scroll/Scroll";
 // content-com
 import GoodsList from "components/content/goods/GoodsList";
 import BackUp from "components/content/goods/BackUp";
+import MainTabbar from "components/common/tabbar/MainTabbar";
 
 // commponents-Home
 import HomeSwiper from "./homeChild/HomeSwiper";
@@ -90,6 +92,7 @@ export default {
     HomeRecommend,
     HomeFeature,
     HomeChange,
+    MainTabbar,
   },
   created() {
     this.getHome();
