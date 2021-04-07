@@ -6,10 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     goodsImg: {},
+    goodsitem: []
   },
   mutations: {
     goodsImgInfo(state, Img) {
       state.goodsImg = Img;
+    },
+    gooditem(state, goodlist) {
+      state.goodsitem.push(goodlist);
     }
   },
   actions: {

@@ -15,14 +15,19 @@
       </div>
     </div>
     <div class="bottom-right">
-      <div class="join-cart icon">加入購物車</div>
+      <div class="join-cart icon" @click="goToCart">加入購物車</div>
       <div class="buy icon">購買</div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: " DetailBottomBar",
+  name: "DetailBottomBar",
+  methods: {
+    goToCart() {
+      this.$emit("goToCart");
+    },
+  },
 };
 </script>
 <style scoped>

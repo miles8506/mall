@@ -19,11 +19,14 @@ export function Recommend() {
 export class goodInfo {
   constructor(data) {
     //top
+    this.iid = data.itemInfo.iid;
     this.title = data.itemInfo.title;
     this.price = data.itemInfo.price;
     this.oldPrice = data.itemInfo.oldPrice;
     this.discountDesc = data.itemInfo.discountDesc;
     this.discountColor = data.itemInfo.discountBgColor;
+    this.desc = data.itemInfo.desc;
+    this.newprice = data.itemInfo.lowNowPrice;
     //center
     this.sales = data.columns[0];
     this.save = data.columns[1];

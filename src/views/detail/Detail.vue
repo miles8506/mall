@@ -29,7 +29,8 @@
         @imgcomplete="imgcomplete"
       />
     </scroll>
-    <bottom-bar class="test" />
+    <back-up v-if="scrollIcon" @click.native="clickTop" />
+    <bottom-bar class="bottom-bar" @goToCart="goCart" />
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import DetailParams from "./detailChild/DetailParams";
 import DetaCommentInfo from "./detailChild/DetaCommentInfo";
 import GoodsList from "components/content/goods/GoodsList";
 import BottomBar from "./detailChild/DetailBottomBar";
+import BackUp from "components/content/goods/BackUp";
 
 import Scroll from "components/common/scroll/Scroll";
 //network
@@ -69,6 +71,7 @@ export default {
       pullUpLoad: true,
       detailOffset: [],
       offsetTopIndex: 0,
+      scrollIcon: false,
     };
   },
   components: {
@@ -81,16 +84,17 @@ export default {
     DetaCommentInfo,
     GoodsList,
     BottomBar,
+    BackUp,
     Scroll,
   },
-  created() {
+  mounted() {
     this.iid = this.$route.params.iid;
     DetailData(this.iid).then((res) => {
       const data = res.data.result;
       this.topimage = data.itemInfo.topImages;
       this.goodInfo = new goodInfo(data);
       this.shopInfo = new shopInfo(data);
-      this.$store.commit("goodsImgInfo", data.detailInfo);
+      // this.$store.commit("goodsImgInfo", data.detailInfo);
       this.params = new params(data);
       if (data.rate.cRate !== 0) {
         this.comment = data.rate;
@@ -99,8 +103,6 @@ export default {
     Recommend().then((res) => {
       this.recommend = res.data.data.list;
     });
-  },
-  mounted() {
     this.$bus.$on("detailImgY", () => {
       this.imgcomplete();
     });
@@ -130,6 +132,20 @@ export default {
           this.$refs.detailBar.currentIndex = i;
         }
       }
+      positionY > 1000 ? (this.scrollIcon = true) : (this.scrollIcon = false);
+    },
+    clickTop() {
+      this.$refs.detailScroll.scrollto(0, 0);
+    },
+    //加入購物車
+    goCart() {
+      const goodlist = {};
+      goodlist.iid = this.goodInfo.iid;
+      goodlist.title = this.goodInfo.title;
+      goodlist.desc = this.goodInfo.desc;
+      goodlist.price = this.goodInfo.newprice;
+      goodlist.img = this.goodInfo.sevenDayImg;
+      this.$store.commit("gooditem", goodlist);
     },
   },
 };
@@ -147,8 +163,9 @@ export default {
 }
 .detail-scroll {
   position: absolute;
+  top: 44px;
   left: 0;
-  bottom: 44px;
+  bottom: 49px;
   height: 100vh;
 }
 .detail-bar {
@@ -158,7 +175,7 @@ export default {
   background-color: #fff;
   z-index: 99999;
 }
-.test {
+.bottom-bar {
   position: fixed;
   bottom: 0;
   left: 0;
