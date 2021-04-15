@@ -59,8 +59,14 @@ export default {
     scrollto(x, y, time = 300) {
       this.scroll.scrollTo(x, y, time);
     },
+    scrollrefresh() {
+      this.scroll.refresh();
+    },
   },
 };
 </script>
 <style scoped>
+.content {
+  padding-bottom: 95px;
+}
 </style>

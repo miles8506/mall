@@ -3,21 +3,19 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import mutations from './mutations';
+import actions from './actions';
+import getters from './getters';
+
+const state = {
+  goodsImg: {},
+  goodsitem: []
+};
+
+
 export default new Vuex.Store({
-  state: {
-    goodsImg: {},
-    goodsitem: []
-  },
-  mutations: {
-    goodsImgInfo(state, Img) {
-      state.goodsImg = Img;
-    },
-    gooditem(state, goodlist) {
-      state.goodsitem.push(goodlist);
-    }
-  },
-  actions: {
-  },
-  modules: {
-  }
+  state,
+  mutations,
+  actions,
+  getters
 })

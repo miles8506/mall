@@ -34,8 +34,15 @@ export class goodInfo {
     //bottomb
     this.sevenDayContent = data.shopInfo.services[2].name;
     this.sevenDayImg = data.shopInfo.services[2].icon;
-    this.seventyTwoContent = data.shopInfo.services[3].name;
-    this.seventyTwoDayImg = data.shopInfo.services[3].icon;
+    // this.seventyTwoContent = data.shopInfo.services[3].name;
+    // this.seventyTwoDayImg = data.shopInfo.services[3].icon;
+    if (data.shopInfo.services[3]) {
+      this.seventyTwoContent = data.shopInfo.services[3].name;
+      this.seventyTwoDayImg = data.shopInfo.services[3].icon;
+    } else {
+      this.seventyTwoContent = '';
+      this.seventyTwoDayImg = '';
+    }
   };
 };
 

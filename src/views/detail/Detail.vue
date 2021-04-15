@@ -94,7 +94,7 @@ export default {
       this.topimage = data.itemInfo.topImages;
       this.goodInfo = new goodInfo(data);
       this.shopInfo = new shopInfo(data);
-      // this.$store.commit("goodsImgInfo", data.detailInfo);
+      this.$store.commit("goodsImgInfo", data.detailInfo);
       this.params = new params(data);
       if (data.rate.cRate !== 0) {
         this.comment = data.rate;
@@ -145,8 +145,12 @@ export default {
       goodlist.desc = this.goodInfo.desc;
       goodlist.price = this.goodInfo.newprice;
       goodlist.img = this.goodInfo.sevenDayImg;
-      this.$store.commit("gooditem", goodlist);
+      goodlist.pic = this.topimage[0];
+      this.$store.dispatch("gooditem", goodlist);
     },
+  },
+  destroyed() {
+    this.$bus.$off("detailImgY");
   },
 };
 </script>
@@ -167,6 +171,7 @@ export default {
   left: 0;
   bottom: 49px;
   height: 100vh;
+  overflow: hidden;
 }
 .detail-bar {
   position: fixed;
