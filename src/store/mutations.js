@@ -7,6 +7,10 @@ export default {
   },
   addGoods(state, goodlist) {
     goodlist.count = 1;
+    goodlist.status = true;
     state.goodsitem.push(goodlist);
+  },
+  setStatus(state, statusBox) {
+    state.goodsitem[statusBox.index].status = statusBox.itemStatus;
   }
 }

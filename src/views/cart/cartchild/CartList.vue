@@ -1,8 +1,15 @@
 <template>
   <div class="cart_wrap">
     <div class="cart_item" v-for="(item, index) in cartList" :key="index">
-      <div class="check">
-        <img src="@/assets/img/cart/tick.svg" alt="" />
+      <div
+        class="check"
+        :class="{ current: !$store.state.goodsitem[index].status }"
+        @click="showImg(index)"
+      >
+        <img
+          src="@/assets/img/cart/tick.svg"
+          v-if="$store.state.goodsitem[index].status"
+        />
       </div>
       <div class="goodsImg"><img :src="'https:' + item.pic" alt="" /></div>
       <div class="goodsInfo">
@@ -21,11 +28,25 @@ export default {
   name: "CartList",
   data() {
     return {
-      cartList: [],
+      cartList: null,
     };
   },
+  props: {
+    list: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   activated() {
-    this.cartList = this.$store.state.goodsitem;
+    this.cartList = this.list;
+  },
+  methods: {
+    showImg(index) {
+      const itemStatus = !this.$store.state.goodsitem[index].status;
+      this.$store.commit("setStatus", { itemStatus, index });
+    },
   },
 };
 </script>
@@ -43,8 +64,16 @@ export default {
   width: 20px;
   height: 20px;
   margin: 55px 5px 0 0;
+  border-radius: 50%;
+}
+
+.check img {
   background-color: var(--color-tint);
   border-radius: 50%;
+}
+
+.current {
+  border: 1px solid #999;
 }
 
 /* img */
