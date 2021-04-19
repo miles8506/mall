@@ -56,6 +56,9 @@ import {
   Recommend,
 } from "network/detail.js";
 
+//action
+import { mapActions } from "vuex";
+
 export default {
   name: "Detail",
   data() {
@@ -108,6 +111,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions(["gooditem"]),
     detailBarIndex(index) {
       this.$refs.detailScroll.scrollto(0, -this.detailOffset[index]);
     },
@@ -146,7 +150,7 @@ export default {
       goodlist.price = this.goodInfo.newprice;
       goodlist.img = this.goodInfo.sevenDayImg;
       goodlist.pic = this.topimage[0];
-      this.$store.dispatch("gooditem", goodlist);
+      this.gooditem(goodlist).then((res) => this.$toast.show(res));
     },
   },
   destroyed() {

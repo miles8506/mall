@@ -12,7 +12,8 @@
     >
       <cart-list :list="cartList" />
     </scroll>
-    <cart-tabbar class="tabbar" />
+    <toast />
+    <cart-tabbar class="tabbar" :cartLength="cartListLength" />
   </div>
 </template>
 <script>
@@ -20,6 +21,7 @@ import navBar from "components/common/navbar/navBar.vue";
 import cartList from "./cartchild/CartList";
 import cartTabbar from "./cartchild/CartTabbar";
 import scroll from "components/common/scroll/Scroll.vue";
+import toast from "components/common/toast/Toast";
 
 import { mapGetters } from "vuex";
 
@@ -28,6 +30,7 @@ export default {
   data() {
     return {
       cartList: [],
+      cartListLength: 0,
     };
   },
   components: {
@@ -35,6 +38,7 @@ export default {
     cartList,
     cartTabbar,
     scroll,
+    toast,
   },
   computed: {
     ...mapGetters({
@@ -44,7 +48,7 @@ export default {
   activated() {
     // 接收vuex數據並將cartList傳送給子組件
     this.cartList = this.$store.state.goodsitem;
-
+    this.cartListLength = this.cartList.length;
     this.$refs.scroll.scrollrefresh();
   },
 };

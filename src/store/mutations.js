@@ -12,5 +12,17 @@ export default {
   },
   setStatus(state, statusBox) {
     state.goodsitem[statusBox.index].status = statusBox.itemStatus;
+  },
+
+  // CartTabbar 全選
+  setStatusFalse(state) {
+    state.goodsitem.forEach(item => {
+      item.status = false;
+    });
+  },
+  setStatusTrue(state) {
+    state.goodsitem.forEach(item => {
+      item.status = true;
+    })
   }
 }
