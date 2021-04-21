@@ -11,7 +11,7 @@
           v-if="$store.state.goodsitem[index].status"
         />
       </div>
-      <div class="goodsImg"><img :src="'https:' + item.pic" alt="" /></div>
+      <div class="goodsImg"><img v-lazy="'https:' + item.pic" alt="" /></div>
       <div class="goodsInfo">
         <h4 class="title">{{ item.title }}</h4>
         <p class="desc">{{ item.desc }}</p>

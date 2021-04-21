@@ -10,7 +10,7 @@
     </div>
     <div v-if="$store.state.goodsImg.detailImage">
       <img
-        :src="item"
+        v-lazy="item"
         alt=""
         v-for="item in $store.state.goodsImg.detailImage[0].list"
         :key="item"

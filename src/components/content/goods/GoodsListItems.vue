@@ -1,7 +1,7 @@
 <template>
   <div class="goods-list-items" @click="routerDetail">
     <a href="javascript:;">
-      <img :src="option" alt="" @load="imgload" />
+      <img v-lazy="option" alt="" @load="imgload" />
       <p class="title">{{ goodlistitem.title }}</p>
       <span class="price">{{ goodlistitem.price }}</span
       ><span class="cfav">{{ goodlistitem.cfav }}</span>
